@@ -1,2 +1,4 @@
 HosfordHackers
 ==============
+
+Learning programming
