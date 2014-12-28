@@ -44,7 +44,7 @@ Strings
 * Put it in either single or double quotes: `"Hi there"` or `'Hi there'`
 * Handy string actions:
   * `"Hi there".length` (get the length of a string)
-  * `"Hi there"[0]` -> "H" (get one character from a string, starting at 0)
+  * `"Hi there".charAt(0)` -> "H" (get one character from a string, starting at 0)
   * `"Hi there".slice(3, 8)` -> "there" (get part of the string, with the start and end)
   * `"Hi there".toUpperCase()` -> "HI THERE"
   * `"Hi there".toLowerCase()` -> "hi there"
