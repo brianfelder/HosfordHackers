@@ -7,3 +7,5 @@ Exercise 3
   * Inside the loop, use `prompt` to get numbers from the user.
   * The first time the user enters a NaN value (`isNaN`), then `break` out of the loop.
   * Calculate the average and show it in an `alert`.
+
+Here's a solution: http://hastebin.com/jukabewofa.js

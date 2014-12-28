@@ -9,13 +9,8 @@ Name your function `printTriangle`, and give it two parameters: `theCharacter` a
 
 `printTriangle("*", 10);`
 
-In case you don't still have it, here's a solution to Exercise 2. You'll want to design this so that theCharacter and timesToRepeat are function parameters.
+In case you don't still have it, here's a solution to Exercise 2: http://hastebin.com/ilopajokuh.avrasm
 
-        var theCharacter = "#";
-        var timesToRepeat = 7;
-        var fullString = theCharacter;
-        for (var i = 0; i < 7; i++) {
-            console.log(fullString);
-            fullString = fullString + theCharacter;
-        }
+You'll want to design this so that theCharacter and timesToRepeat are function parameters.
 
+Here's a solution: http://hastebin.com/apoxijakix.coffee
