@@ -17,3 +17,5 @@ Hints:
 * Loop through the string as many times as `theString.length`.
   * Use `theString.charAt(i)` to inspect whether the character in the current iteration of the loop is the same as `theCharacter`. Increment `charCount` for each match.
 * Return `charCount`.
+
+A solution is here: https://github.com/brianfelder/HosfordHackers/blob/master/Exercises/SolutionExercise05.js
