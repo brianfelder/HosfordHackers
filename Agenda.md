@@ -1,23 +1,23 @@
 Agenda
 ==
-# Why JavaScript?
-# Introduce the Chrome JavaScript console
-# Browser interaction: Alerting the user (alert)
-# Comments
-# Data types
-  # Numbers
-  # Comparison
-  # Strings
-  # Boolean
-  # Special values (null, undefined, NaN)
-# Type conversion
-# Variables
-# Browser interaction: Prompting the user (prompt)
-# Browser interaction: Writing to the page (document.writeln)
-# Exercise 1
-# Looping
-# Exercise 2
-# Conditionals
-# Exercise 3
-# Functions
-# Redo Exercise 2 as a function, taking two parameters: The 
+1. Why JavaScript?
+1. Introduce the Chrome JavaScript console
+1. Browser interaction: Alerting the user (alert)
+1. Comments
+1. Data types
+  1. Numbers
+  1. Comparison
+  1. Strings
+  1. Boolean
+  1. Special values (null, undefined, NaN)
+1. Type conversion
+1. Variables
+1. Browser interaction: Prompting the user (prompt)
+1. Browser interaction: Writing to the page (document.writeln)
+1. Exercise 1
+1. Looping
+1. Exercise 2
+1. Conditionals
+1. Exercise 3
+1. Functions
+1. Redo Exercise 2 as a function, taking two parameters: The 
