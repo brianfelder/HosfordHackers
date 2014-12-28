@@ -5,7 +5,7 @@ Exercise 1
   * First, use variables to find out how many seconds are in a day, in a year, then multiply by how old the user is.
   * Get the user's input in a `prompt`, and output the number of seconds in an `alert`.
 
-Here's one solution: http://hastebin.com/hoqehuvafa.coffee
+Here's one solution: https://github.com/brianfelder/HosfordHackers/blob/master/Exercises/SolutionExercise01.js
 
 Now, build on this by asking what year the user was born, then calculating the approximate age. You can do something like this:
 

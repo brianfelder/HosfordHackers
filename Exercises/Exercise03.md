@@ -8,4 +8,4 @@ Exercise 3
   * The first time the user enters a NaN value (`isNaN`), then `break` out of the loop.
   * Calculate the average and show it in an `alert`.
 
-Here's a solution: http://hastebin.com/jukabewofa.js
+Here's a solution: https://github.com/brianfelder/HosfordHackers/blob/master/Exercises/SolutionExercise03.js
