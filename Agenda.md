@@ -1,6 +1,10 @@
 Agenda
 ==
 1. Why JavaScript?
+  1. Some cool examples:
+    1. http://lights.helloenjoy.com/
+    1. http://www.patatap.com/
+    1. http://www.grrok.com/turtle/
 1. Introduce the Chrome JavaScript console
 1. Browser interaction: Alerting the user (alert)
 1. Comments
