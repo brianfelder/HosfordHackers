@@ -12,6 +12,6 @@ In case you don't still have it, here's a solution to Exercise 2. You'll want to
         var fullString = theCharacter;
         for (var i = 0; i < 7; i++) {
             console.log(fullString);
-	    fullString = fullString + theCharacter;
+            fullString = fullString + theCharacter;
         }
 
