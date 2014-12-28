@@ -20,4 +20,4 @@ Agenda
 1. Conditionals
 1. Exercise 3
 1. Functions
-1. Redo Exercise 2 as a function, taking two parameters: The 
+1. Exercise 4
