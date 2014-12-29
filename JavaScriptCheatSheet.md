@@ -34,9 +34,6 @@ Numbers
 * Other operators:
   * Test for equality or inequality: `===` and `!==`
   * Test for less / greater / less-equal / greater-equal: `<`, `>`, `<=`, and `>=`
-* Handy number functions:
-  * To test if a value is "Not A Number": `isNaN("10")`
-  * Convert a string to an int value: `parseInt("1999");`
 
 Comparison
 --
@@ -55,6 +52,9 @@ Strings
   * `"Hi there".toUpperCase()` -> "HI THERE"
   * `"Hi there".toLowerCase()` -> "hi there"
 * WARNING! `("11" + "55") !== (11 + 55)`
+  * Convert a string to a number value: `parseInt("1999");` or `parseFloat("3.14159265");`
+  * To test if a value is "Not A Number": `isNaN("10")`
+
 
 Boolean (fancy way of saying true or false)
 --
@@ -81,14 +81,14 @@ If an operator is applied to the "wrong" type, JavaScript quietly converts it to
         // → 51
         console.log("five" * 2)
         // → NaN
-        console.log(false == 0)
-        // → true
+
 
 Variables
 ==
 * Making a variable: `var myVariable = 6;`
-* Add one to a number variable (increment): `myVariable++` or `myVariable += 1`
-* Subtract one from a number variable (decrement): `myVariable--` or `myVariable -= 1`
+* Add one to a number variable (increment): `myVariable = myVariable + 1`, `myVariable++`, or `myVariable += 1`
+* Subtract one from a number variable (decrement): `myVariable = myVariable - 1`, `myVariable--`, or `myVariable -= 1`
+* Concatenating to a string variable: `myString = myString + " all the things!"` or `myString += " all the things!"` (`++` doesn't apply here. Why not?)
 
 
 Loops
