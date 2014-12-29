@@ -18,4 +18,8 @@ Hints:
   * Use `theString.charAt(i)` to inspect whether the character in the current iteration of the loop is the same as `theCharacter`. Increment `charCount` for each match.
 * Return `charCount`.
 
-A solution is here: https://github.com/brianfelder/HosfordHackers/blob/master/Exercises/SolutionExercise05.js
+A solution is here: https://github.com/brianfelder/JavaScriptBuildingBlocks/blob/master/Exercises/SolutionExercise05.js
+
+Bonus:
+* This is great, but the trouble is, it's case-sensitive. That is, if you put in "c", and there's a "C", it won't find it. How would you make this program so that it does not care about case?
+  * Hint: try comparing `theString.toLowerCase()` to `theCharacter.toLowerCase()`.

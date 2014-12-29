@@ -16,4 +16,4 @@ Exercise 2
     * Use a for loop: `for (var i = 0; i < 7; i++)`
     * You can go from "#" to "##" by adding a character: `myString += "#";`
 
-Here's a solution: https://github.com/brianfelder/HosfordHackers/blob/master/Exercises/SolutionExercise02.js
+Here's a solution: https://github.com/brianfelder/JavaScriptBuildingBlocks/blob/master/Exercises/SolutionExercise02.js

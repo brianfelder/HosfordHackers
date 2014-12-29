@@ -10,5 +10,5 @@ var countChar = function(theString, theCharacter) {
 
 console.log(countChar("Chica Felder", "e"));
 // 2
-console.log(countChar("Hosford Hackers", "H"));
+console.log(countChar("JavaScriptBuildingBlocks", "B"));
 // 2

@@ -9,8 +9,8 @@ Name your function `printTriangle`, and give it two parameters: `theCharacter` a
 
 `printTriangle("*", 10);`
 
-In case you don't still have it, here's a solution to Exercise 2: https://github.com/brianfelder/HosfordHackers/blob/master/Exercises/SolutionExercise02.js
+In case you don't still have it, here's a solution to Exercise 2: https://github.com/brianfelder/JavaScriptBuildingBlocks/blob/master/Exercises/SolutionExercise02.js
 
 You'll want to design this so that theCharacter and timesToRepeat are function parameters.
 
-Here's a solution: https://github.com/brianfelder/HosfordHackers/blob/master/Exercises/SolutionExercise04.js
+Here's a solution: https://github.com/brianfelder/JavaScriptBuildingBlocks/blob/master/Exercises/SolutionExercise04.js
