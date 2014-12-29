@@ -12,8 +12,8 @@ Agenda
     1. http://www.patatap.com/
     1. http://www.grrok.com/turtle/
 1. Introduce the Chrome JavaScript console
-1. Browser interaction: Alerting the user (alert)
 1. Comments
+1. Some basics
 1. Data types
   1. Numbers
   1. Comparison
@@ -22,8 +22,6 @@ Agenda
   1. Special values (null, undefined, NaN)
 1. Type conversion
 1. Variables
-1. Browser interaction: Prompting the user (prompt)
-1. Browser interaction: Writing to the page (document.writeln)
 1. Exercise 1
 1. Looping
 1. Exercise 2
