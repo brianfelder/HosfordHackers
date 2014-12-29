@@ -101,6 +101,8 @@ Loops
 
 * To loop while a condition is true, use a `while` loop:
 
+        // Usually, you want to be REALLY careful with while-true loop.
+        // This is called an "infinite loop."
         while (true) {
             console.log("I've fallen and I can't get up!");
         }
