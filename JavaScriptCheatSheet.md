@@ -7,14 +7,20 @@ Comments
            It's really verbose and dull.
         */
 
-
-Browser interaction
+Some basics
 ==
 
-    alert("Hey! Wake up!");
-    var birthYear = prompt("What year were you born?");
-    document.writeln("Look at me! I'm on the page!");
+    // Make a variable using "var". Example (note that in all these examples, upper and lowercase matter):
+    var whatsUp = "What's up?";
 
+    // Print out the variable's value in an alert. Example:
+    alert("I ask the world: " + whatsUp);
+
+    // Prompt the user for input:
+    var yourAge = prompt("How old are you?");
+
+    // Print on the page:
+    document.writeln("I ask the world: " + whatsUp);
 
 Data Types
 ==
