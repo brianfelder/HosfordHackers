@@ -54,6 +54,7 @@ Strings
   * `"Hi there".slice(3, 8)` -> "there" (get part of the string, with the start and end)
   * `"Hi there".toUpperCase()` -> "HI THERE"
   * `"Hi there".toLowerCase()` -> "hi there"
+* WARNING! `("11" + "55") !== (11 + 55)`
 
 Boolean (fancy way of saying true or false)
 --
