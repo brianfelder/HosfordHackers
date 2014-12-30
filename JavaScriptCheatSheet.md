@@ -195,8 +195,3 @@ Other handy array actions:
     // 2
     sports.indexOf("tennis");
     // -1 (because the item does not exist in the array.)
-
-Exercise 6
-==
-Magic 8 ball. Introduce Math.random(), with an array.
-Random insult generator
