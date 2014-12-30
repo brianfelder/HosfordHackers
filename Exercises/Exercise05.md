@@ -1,25 +1,16 @@
-Exercise 5
+Exercise 4
 ==
 
-* Write a function to count the number of characters in a string. The function takes two parameters:
-  * The string.
-  * The character we're counting.
+* Redo Exercise 2, except make it a function with two parameters:
+  * What character to use.
+  * How many times to repeat.
 
-Name your function `countChar`, and give it two parameters: `theString` and `theCharacter`. You will be able to call this function with something like this:
+Name your function `printTriangle`, and give it two parameters: `theCharacter` and `timesToRepeat`. You will be able to call this function with something like this:
 
-        var numberOfEs = countChar("Chica Felder", "e");
-	console.log(numberOfEs);
-	// 2
+`printTriangle("*", 10);`
 
-Hints:
-* Define a variable `charCount` that this function will return.
-* Use `theString.length` to get the length of theString.
-* Loop through the string as many times as `theString.length`.
-  * Use `theString.charAt(i)` to inspect whether the character in the current iteration of the loop is the same as `theCharacter`. Increment `charCount` for each match.
-* Return `charCount`.
+In case you don't still have it, here's a solution to Exercise 2: https://github.com/brianfelder/JavaScriptBuildingBlocks/blob/master/Exercises/SolutionExercise02.js
 
-A solution is here: https://github.com/brianfelder/JavaScriptBuildingBlocks/blob/master/Exercises/SolutionExercise05.js
+You'll want to design this so that theCharacter and timesToRepeat are function parameters.
 
-Bonus:
-* This is great, but the trouble is, it's case-sensitive. That is, if you put in "c", and there's a "C", it won't find it. How would you make this program so that it does not care about case?
-  * Hint: try comparing `theString.toLowerCase()` to `theCharacter.toLowerCase()`.
+Here's a solution: https://github.com/brianfelder/JavaScriptBuildingBlocks/blob/master/Exercises/SolutionExercise05.js

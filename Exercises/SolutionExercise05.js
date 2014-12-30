@@ -1,14 +1,11 @@
-var countChar = function(theString, theCharacter) {
-  var charCount = 0;
-  for (var i = 0; i < theString.length; i++) {
-    if (theString.charAt(i) === theCharacter) {
-        charCount++;
-    }
+// Exercise 4
+var printTriangle = function(theCharacter, timesToRepeat) {
+  var fullString = theCharacter;
+  for (var i = 0; i < timesToRepeat; i++) {
+    console.log(fullString);
+    fullString = fullString + theCharacter;
   }
-  return charCount;
 }
 
-console.log(countChar("Chica Felder", "e"));
-// 2
-console.log(countChar("JavaScriptBuildingBlocks", "B"));
-// 2
+printTriangle("$", 9);
+printTriangle("@", 12);
