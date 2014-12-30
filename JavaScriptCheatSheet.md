@@ -129,3 +129,74 @@ Functions
 
         console.log(square(12));
         // → 144
+
+Arrays
+==
+Arrays are a list of other JavaScript data values. You can put any other type of thing into an array: numbers, strings, boolean, objects, even other arrays. You can even mix types in an array. You can think of an array as one variable that contains several pieces, ordered in a list.
+
+To declare an array, use square brackets, and separate the array items with commas:
+
+    var timeToCelebrate = ["Hip!", "Hip!"]; // A Hip! Hip! Array! (whomp whomp)
+    var sports = ["baseball", "football", "basketball", "soccer", "programming"];
+    var mixOfStuff = ["Candle", 42, false, [-45, "Yo."]];
+
+To get a particular item out of the array, use square brackets with a number:
+
+    sports[1];
+    // "football"
+    mixOfStuff[2];
+    // true
+    mixOfStuff[3][1];
+    // "Yo."
+
+To get the length of an array:
+
+    sports.length
+    // 5
+    mixOfStuff.length
+    // 4
+    mixOfStuff[3].length
+    // 2
+
+To get the last element in an array:
+
+    sports[sports.length - 1];
+    // "programming"
+
+Other handy array actions:
+    
+    // Remove an element from the end of an array.
+    sports.pop();
+    sports
+    // ["baseball", "football", "basketball", "soccer"]
+
+    // Add an element to the end of an array.
+    sports.push("cricket");
+    sports
+    // ["baseball", "football", "basketball", "soccer", "cricket"]
+
+    // Remove an element from the beginning of an array.
+    sports.shift();
+    sports
+    // ["football", "basketball", "soccer", "cricket"]
+
+    // Add an element to the beginning of an array.
+    sports.unshift("volleyball");
+    sports
+    // ["volleyball", "football", "basketball", "soccer", "cricket"]
+
+    // Replace an array element.
+    sports[3] = "badminton";
+    sports
+    // ["volleyball", "football", "basketball", "badminton", "cricket"]
+
+    // Find the index of a particular element.
+    sports.indexOf("basketball");
+    // 2
+    sports.indexOf("tennis");
+    // -1 (because the item does not exist in the array.)
+
+Exercise 6
+==
+Magic 8 ball. Introduce Math.random(), with an array.
+Random insult generator
