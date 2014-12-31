@@ -19,14 +19,30 @@
         "Kari"
       ];
 
+      // Define an array of colors.
+      var colors = [
+        "red",
+	"orange",
+	"green",
+	"blue",
+	"violet",
+	"gray"
+      ];
+
+
       // Define a function to change the name. This will be called every second.
       changeText = function() {
+
         // Choose an array index at random, and get the name at that index.
-        var programmerIndex = Math.floor(Math.random() * programmers.length);
-        var programmerName = programmers[programmerIndex];
+        var randomIndex = Math.floor(Math.random() * programmers.length);
+        var programmerName = programmers[randomIndex];
+	var colorName = colors[randomIndex];
+
         // Here's the cool part: we set the value of the HTML span tag
-        // to the name of the programmer.
-        document.getElementById("programmerName").innerHTML = programmerName;
+        // to the name of the programmer, and the style to the color.
+	var programmerNameSpan = document.getElementById("programmerName");
+        programmerNameSpan.innerHTML = programmerName;
+	programmerNameSpan.style.color = colorName;
       }
 
       // This is where the function gets called every second.
