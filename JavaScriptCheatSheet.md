@@ -253,12 +253,25 @@ Or, an array can be an attribute of an object:
     var chestnut = {"species" : "guinea pig", "hobbies" : ["squeaking", "popcorning", "eating"]}
     chestnut.hobbies
     // ["squeaking", "popcorning", "eating"]
+    chestnut.hobbies[1];
+    // "popcorning"
 
-If you want to loop through the properties of an object, you need to do this:
+Or, an object can be an attribute of an object:
+
+    var oreo = {"species" : "cat", "name" : "Oreo", "color" : "black and white", "sound" : {"name" : "meow", "duration" : "1 second", "frequency" : "whenever hungry"}};
+    oreo.sound
+    // Object {name: "meow", duration: "1 second", frequency: "whenever hungry"}
+    oreo.sound.frequency
+    // "whenever hungry"
+
+
+If you want to loop through the properties of an object, you can do it like this:
 
     for (var key in avery) {
+      // hasOwnProperty is needed due to a behavior in JavaScript.
       if (avery.hasOwnProperty(key)) {
         console.log("Avery's " + key + " is " + avery[key]);
       }
     }
 
+You can combine arrays and objects to represent almost any data structure.
