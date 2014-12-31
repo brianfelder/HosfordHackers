@@ -1,0 +1,38 @@
+<html>
+  <head>
+  </head>
+  <body>
+
+    <!-- Here's a placeholder for the text we're going to change. -->
+    <span id="programmerName"></span> totally rocks JavaScript!
+
+    <!-- Here's where we do our JavaScript. -->
+    <script>
+
+      // Define an array of our programmers.
+      var programmers = [
+        "Linnea R.",
+        "Grace R.",
+        "Grace F.",
+        "Charisse",
+        "Linnea G.",
+        "Kari"
+      ];
+
+      // Define a function to change the name. This will be called every second.
+      changeText = function() {
+        // Choose an array index at random, and get the name at that index.
+        var programmerIndex = Math.floor(Math.random() * programmers.length);
+        var programmerName = programmers[programmerIndex];
+        // Here's the cool part: we set the value of the HTML span tag
+        // to the name of the programmer.
+        document.getElementById("programmerName").innerHTML = programmerName;
+      }
+
+      // This is where the function gets called every second.
+      setInterval(changeText, 1000);
+      
+    </script>
+
+  </body>
+</html>
