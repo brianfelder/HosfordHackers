@@ -90,6 +90,9 @@ Variables
 * Subtract one from a number variable (decrement): `myVariable = myVariable - 1`, `myVariable--`, or `myVariable -= 1`
 * Concatenating to a string variable: `myString = myString + " all the things!"` or `myString += " all the things!"` (`++` doesn't apply here. Why not?)
 
+Exercise 1
+==
+[Exercise 1](Exercises/Exercise01.md)
 
 Loops
 ==
@@ -109,6 +112,11 @@ Loops
 
 * To break out of a loop: `break`
 
+Exercise 2
+==
+[Exercise 2](Exercises/Exercise02.md)
+
+
 Conditionals
 ==
 
@@ -120,6 +128,12 @@ Conditionals
         console.log("Less than 5!");
     }
 
+Exercise 3 and 4
+==
+Do 3 and 4 here.
+[Exercise 3](Exercises/Exercise03.md)
+[Exercise 4](Exercises/Exercise04.md)
+
 Functions
 ==
 
@@ -129,6 +143,13 @@ Functions
 
         console.log(square(12));
         // → 144
+
+Exercise 5, 6, and 6-50
+==
+[Exercise 5](Exercises/Exercise05.md)
+[Exercise 6](Exercises/Exercise06.md)
+[Exercise 6-50](Exercises/Exercise06-50.md)
+Do 5, 6 and 6-50 here.
 
 Arrays
 ==
@@ -195,6 +216,10 @@ Other handy array actions:
     // 2
     sports.indexOf("tennis");
     // -1 (because the item does not exist in the array.)
+
+Exercise 7
+==
+[Exercise 7](Exercises/Exercise07.md)
 
 Objects
 ==
@@ -275,3 +300,7 @@ If you want to loop through the properties of an object, you can do it like this
     }
 
 You can combine arrays and objects to represent almost any data structure.
+
+Exercise 8
+==
+[Exercise 8](Exercises/Exercise08.md)
