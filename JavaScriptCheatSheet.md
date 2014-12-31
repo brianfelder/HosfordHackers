@@ -195,3 +195,70 @@ Other handy array actions:
     // 2
     sports.indexOf("tennis");
     // -1 (because the item does not exist in the array.)
+
+Objects
+==
+Objects are like arrays, in that they are collections of things inside one variable. The difference is that objects use strings instead of numbers to access the different elements. The strings are called keys, and the elements are called values. While arrays are typically used to represent multiple things, objects are typically (though not always) used to represent one thing with multiple attributes.
+
+To create an object, you use curly braces, and key-value pairs separated by commas, with a colon separating the key from the value. Example:
+
+    var dog = {
+      "name"  : "Chica",
+      "color" : "tan",
+      "breed" : "Yohuahua",
+      "hobby" : "lap-sitting",
+      "legs"  : 4,
+      "barks" : true
+    }
+
+There are two ways to access the values in an object:
+
+    // Square brackets
+    dog["name"]
+    // "Chica"
+    dog["breed"]
+    // "Yohuahua"
+
+    // Dot notation
+    dog.name
+    // "Chica"
+    dog.barks
+    // true
+
+You can also create an empty object like so:
+
+    var cat = {}
+
+Then later add attributes like so:
+
+    cat.name = "Oreo";
+    cat.color = "black and white"
+    cat.isTooFat = true;
+
+    cat
+    // Object {name: "Oreo", color: "black and white", isTooFat: true}
+
+You can also create an array of objects, like so:
+
+    // Create the individual objects.
+    var chica = {"species" : "dog", "name" : "Chica", "color" : "tan", "barks" : true};
+    var avery = {"species" : "dog", "name" : "Avery", "color" : "black", "barks" : true};
+    var oreo = {"species" : "cat", "name" : "Oreo", "color" : "black and white", "meows" : true};
+
+    // Put the objects into an array.
+    var pets = [chica, avery, oreo];
+
+Or, an array can be an attribute of an object:
+
+    var chestnut = {"species" : "guinea pig", "hobbies" : ["squeaking", "popcorning", "eating"]}
+    chestnut.hobbies
+    // ["squeaking", "popcorning", "eating"]
+
+If you want to loop through the properties of an object, you need to do this:
+
+    for (var key in avery) {
+      if (avery.hasOwnProperty(key)) {
+        console.log("Avery's " + key + " is " + avery[key]);
+      }
+    }
+
