@@ -1,4 +1,4 @@
-Exercise 4
+Exercise 5
 ==
 
 * Redo Exercise 2, except make it a function with two parameters:
