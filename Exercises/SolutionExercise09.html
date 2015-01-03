@@ -1,0 +1,65 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <canvas id="turtlecanvas" height="500" width="800" />
+    <!-- <script src="http://www.grrok.com/turtle/pen.js"></script> -->
+    <script src="../Turtle/pen.js"></script>
+    <script>
+      // attach to a canvas tag
+      var p = new Pen("turtlecanvas");
+
+      p.jump(100, 100);
+
+      // Make a star. Takes a pen, and the line length per side.
+      // The vertices and density can come from the Schafli symbol for the star polygon:
+      // https://en.wikipedia.org/wiki/Schl%C3%A4fli_symbol (e.g. {7,3})
+      var star = function(p, numberOfVertices, density, lineLength) {
+        // Remember our current position, angle, and origin.
+        var startingX = p.x;
+        var startingY = p.y;
+        var startingAngle = p._angle;
+
+	// Do the drawing.
+        p.pendown();
+        console.log(p.x + " " + p.y + " " + p._angle);
+	// Formula for internal angle of star polygon
+	// per https://en.wikipedia.org/wiki/Star_polygon
+	var internalAngle = (180 * (numberOfVertices - (2 * density))) / numberOfVertices;
+	var turnAngle = 180 - internalAngle;
+        for (var i = 0; i < numberOfVertices; i++) {
+          p.turn(turnAngle).go(lineLength);
+        }
+        p.draw();
+
+        // Go back to the starting position, angle, and origin.
+        p.x = startingX;
+        p.y = startingY;
+        p._angle = startingAngle;
+        console.log(p.x + " " + p.y + " " + p._angle);
+
+	// Return the pen back to the caller.
+        return p;
+      }
+
+
+      star(p, 10, 4, 50);
+
+
+      /*
+      // say hello
+      p.jump(10, 20).font("bold 15px Helvetica").text("Hello World!");
+
+      // draw a tiny square
+      p.jump(10, 30).right(10).down(10).left(10).up(10).draw();
+
+      // make a yellow hexigon with a thicker line
+      p.jump(100, 100).fillstyle("#ff0").pensize(2);
+      for (var i = 0; i < 6; i++)
+          p.go(50).turn(60);
+
+      p.draw();
+      */
+    </script>
+  </body>
+</html>
