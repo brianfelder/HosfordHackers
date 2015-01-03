@@ -3,15 +3,26 @@
     <script src="http://code.createjs.com/easeljs-0.8.0.min.js"></script>
   </head>
   <body onload="init();">
-    <canvas id="demoCanvas" width="500" height="300"></canvas>
+    <canvas id="demoCanvas" width="600" height="400"></canvas>
     <script>
+      var makeCircle  = function(x, y, radius, color) {
+        var circle = new createjs.Shape();
+        circle.graphics.beginFill(color).drawCircle(0, 0, radius);
+        circle.x = x;
+        circle.y = y;
+	return circle;
+      }
       function init() {
         var stage = new createjs.Stage("demoCanvas");
-        var circle = new createjs.Shape();
-        circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-        circle.x = 100;
-        circle.y = 100;
-        stage.addChild(circle);
+	var eyeColor = "DeepSkyBlue";
+	var noseColor = "red";
+	// eyes
+	leftEye  = makeCircle(100, 100, 20, eyeColor);
+	rightEye = makeCircle(200, 100, 20, eyeColor);
+	nose = makeCircle(150, 200, 20, noseColor);
+        stage.addChild(leftEye);
+        stage.addChild(rightEye);
+        stage.addChild(nose);
 	stage.update();
       }
     </script>
