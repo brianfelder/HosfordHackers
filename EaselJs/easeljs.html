@@ -5,6 +5,14 @@
   <body onload="init();">
     <canvas id="demoCanvas" width="600" height="400"></canvas>
     <script>
+      var makeArc  = function(x, y, radius, startAngle, endAngle, color) {
+        var arc = new createjs.Shape();
+        arc.graphics
+		.setStrokeStyle(8, "round")
+		.beginStroke(color)
+		.arc(x, y, radius, startAngle, endAngle);
+	return arc;
+      }
       var makeCircle  = function(x, y, radius, color) {
         var circle = new createjs.Shape();
         circle.graphics.beginFill(color).drawCircle(0, 0, radius);
@@ -17,12 +25,19 @@
 	var eyeColor = "DeepSkyBlue";
 	var noseColor = "red";
 	// eyes
-	leftEye  = makeCircle(100, 100, 20, eyeColor);
-	rightEye = makeCircle(200, 100, 20, eyeColor);
+	leftEye  = makeCircle(100, 100, 30, eyeColor);
+	leftPupil  = makeCircle(100, 100, 10, "black");
+	rightEye = makeCircle(200, 100, 30, eyeColor);
+	rightPupil = makeCircle(200, 100, 10, "black");
 	nose = makeCircle(150, 200, 20, noseColor);
+	smile = makeArc(150, 300, 50, 0, Math.PI, "black");
+	frown = makeArc(150, 300, 50, Math.PI, 0, "black");
         stage.addChild(leftEye);
+        stage.addChild(leftPupil);
         stage.addChild(rightEye);
+        stage.addChild(rightPupil);
         stage.addChild(nose);
+        stage.addChild(smile);
 	stage.update();
       }
     </script>
