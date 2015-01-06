@@ -19,7 +19,8 @@
 </svg>
       -->
 
-      <svg id="svgout" width="500" height="500"><path id="s3" d="L 141 141 L 176 106 L 196 104 Z" stroke="blue"/></svg>
+      <svg id="svgout" width="500" height="500">
+      </svg>
     </div>
     <script>
 
@@ -73,6 +74,10 @@ Drawing.prototype.draw = function() {         // this is the main animation bit
     var myPath = this.pathArray[ this.currentPathIndex ] ;
 
     this.leng = myPath.getTotalLength();
+    console.log("leng: " + this.leng);
+    console.log("currentPathIndex: " + this.currentPathIndex);
+    console.log("myPath: " + myPath);
+    console.log("pathArray: " + this.pathArray);
 
     this.group.append( myPath );
 
@@ -131,8 +136,16 @@ Path.prototype.go = function(distance) {
   return this;
 }
 
+Path.prototype.penup = function() {
+  this.penIsDown = false;
+}
+
+Path.prototype.pendown = function() {
+  this.penIsDown = true;
+}
+
 Path.prototype.pathString = function() {
-  var toReturn = '<path id="s3" d="' + this.pathDescription + '"';
+  var toReturn = '<path id="s3" d="M 0 0 ' + this.pathDescription + '"';
   if (this.color != null) {
     toReturn += ' stroke="' + this.color + '"';
   }
@@ -149,8 +162,10 @@ var thePath = new Path();
 thePath.color = "blue";
 thePath.turn(135);
 thePath.go(200);
+thePath.penup();
 thePath.turn(-90);
 thePath.go(50);
+thePath.pendown();
 thePath.turn(40);
 thePath.go(20);
 console.log(thePath.pathString());
