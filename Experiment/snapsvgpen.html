@@ -9,6 +9,7 @@
             being drawn: shorter for short lines and longer for long lines. -->
       <!-- Use http://snapsvg.io/start/ Less object-orienty, but backed by adobe -->
       <!-- Or http://svgjs.com/  This one seems more object-oriented, but not as much traction.           svg.js's polyline plot() seems to have nice animation features. -->
+      <!--
       <svg id="svgout" width="500" height="500">
         <line x1="0" y1="0" x2="300" y2="400"
 	  style="stroke:rgb(255,0,0);stroke-width:2;stroke-dasharray:500,500; stroke-dashoffset:500">
@@ -16,21 +17,24 @@
               from="500" to="0" dur="2s" fill="freeze"/>
         </line>
 </svg>
+      -->
+
+      <svg id="svgout" width="500" height="500"><path id="s3" d="L 141 141 L 176 106 L 196 104 Z" stroke="blue"/></svg>
     </div>
     <script>
 
-var s = Snap("#svgout");
 // To understand the meaning of the paths below:
 // https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d
-var svgString1 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L 60 180 L 0 120 L 0 60 Z" stroke="blue"/>';
+/*
+    var svgString1 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L 60 180 L 0 120 L 0 60 Z" stroke="blue"/>';
 var svgString2 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L 60 180 L 0 120 L 0 60 Z" stroke="red"/>';
-
-var svgStringPath = "";
+*/
 
 function Drawing( svgString, transformString, timeBetweenDraws ) {
+    this.svg = Snap("#svgout");
     this.fragment = Snap.parse( svgString );
     this.pathArray = this.fragment.selectAll('path');
-    this.group = s.g().transform( transformString ).drag();
+    this.group = this.svg.g().transform( transformString ).drag();
     this.timeBetweenDraws = timeBetweenDraws;
 };
 
@@ -92,7 +96,7 @@ Path.prototype.init = function() {
   this.x = 0;
   this.y = 0;
   this.direction = -90;
-  this.pathString = "";
+  this.pathDescription = "";
   this.directionRadians = function() { return this.toRad(this.direction); };
   this.penIsDown = true;
   this.color = null;
@@ -105,9 +109,9 @@ Path.prototype.turn = function(degrees) {
   return this;
 }
 
-Path.prototype.rad: Math.PI / 180.0;
+Path.prototype.rad = Math.PI / 180.0;
 	
-Path.prototype.toRad: function(degrees) {
+Path.prototype.toRad = function(degrees) {
   return degrees * this.rad;
 }
 
@@ -115,18 +119,44 @@ Path.prototype.go = function(distance) {
   var currentDirectionRadians = this.toRad(this.dir);
 
   this.x += Math.round(distance * Math.cos(this.directionRadians()));
-  this.y += Math.round(r * Math.sin(this.directionRadians()));
+  this.y += Math.round(distance * Math.sin(this.directionRadians()));
 
   if (this.penIsDown)
-    this.pathString += "L ";
+    this.pathDescription += "L ";
   else
-    this.pathString += "M ";
+    this.pathDescription += "M ";
 
-  this.pathString += this.x + " " + this.y + " ";
+  this.pathDescription += this.x + " " + this.y + " ";
 
   return this;
 }
 
+Path.prototype.pathString = function() {
+  var toReturn = '<path id="s3" d="' + this.pathDescription + '"';
+  if (this.color != null) {
+    toReturn += ' stroke="' + this.color + '"';
+  }
+  toReturn += "/>";
+  return toReturn;
+}
+
+Path.prototype.draw = function() {
+  var myDrawing = new Drawing(this.pathString(), 't0, 0, s1.8', 800 );
+  myDrawing.initDraw();
+}
+
+var thePath = new Path();
+thePath.color = "blue";
+thePath.turn(135);
+thePath.go(200);
+thePath.turn(-90);
+thePath.go(50);
+thePath.turn(40);
+thePath.go(20);
+console.log(thePath.pathString());
+thePath.draw();
+
+/**
 var myDrawing1 = new Drawing( svgString1, 't0, 0, s1.8', 800 );
 var myDrawing2 = new Drawing( svgString2, 't69,50 s1.8', 3000 );
 var myDrawing3 = new Drawing( svgString2, 't150,150 s1.8', 5000 );
@@ -134,6 +164,7 @@ var myDrawing3 = new Drawing( svgString2, 't150,150 s1.8', 5000 );
 myDrawing1.initDraw();
 myDrawing1.callOnFinished = function() { myDrawing2.initDraw() };
 myDrawing2.callOnFinished = function() { myDrawing3.initDraw() };
+**/
 
     </script>
   </body>
