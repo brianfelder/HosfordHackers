@@ -1,0 +1,33 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="content">
+      <!-- The stroke dash-array and stroke-dashoffset, and animate.from must be the same as the length of the line (here, it's 500).
+	    I think I'll have to set the animate.dur depending on the length of the line
+            being drawn: shorter for short lines and longer for long lines. -->
+      <!-- Use http://snapsvg.io/start/ Less object-orienty, but backed by adobe -->
+      <!-- Or http://svgjs.com/  This one seems more object-oriented, but not as much traction.           svg.js's polyline plot() seems to have nice animation features. -->
+      <svg width="500" height="500">
+        <line x1="0" y1="0" x2="300" y2="400"
+	  style="stroke:rgb(255,0,0);stroke-width:2;stroke-dasharray:500,500; stroke-dashoffset:500">
+          <animate begin="0" attributeName="stroke-dashoffset"
+              from="500" to="0" dur="2s" fill="freeze"/>
+        </line>
+</svg>
+    </div>
+    <script>
+    </script>
+	      <!-- 
+	      <circle cx="200" cy="200" r="115"
+    style="fill:none; stroke:blue; stroke-dasharray:723,723; stroke-dashoffset:723">
+		-->
+<!--
+    <line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(255,0,0);stroke-width:2;
+stroke-dasharray:723,723; stroke-dashoffset:723">
+    <animate begin="0" attributeName="stroke-dashoffset"
+        from="723" to="0" dur="5s" fill="freeze"/>
+</line>
+-->
+  </body>
+</html>

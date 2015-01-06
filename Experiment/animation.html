@@ -1,0 +1,43 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <canvas id="experiment" height="500" width="800" />
+    <script>
+var x =  0;
+var y = 15;
+var speed = 5;
+
+function animate(theFunction, theParams) {
+
+    reqAnimFrame = window.mozRequestAnimationFrame    ||
+                window.webkitRequestAnimationFrame ||
+                window.msRequestAnimationFrame     ||
+                window.oRequestAnimationFrame
+                ;
+
+    reqAnimFrame(animate);
+
+    x += speed;
+
+    if(x <= 0 || x >= 475){
+        speed = -speed;
+    }
+
+    draw();
+}
+
+
+function draw() {
+    var canvas  = document.getElementById("experiment");
+    var context = canvas.getContext("2d");
+
+    context.clearRect(0, 0, 500, 170);
+    context.fillStyle = "#ff00ff";
+    context.fillRect(x, y, 25, 25);
+}
+
+animate();
+    </script>
+  </body>
+</html>
