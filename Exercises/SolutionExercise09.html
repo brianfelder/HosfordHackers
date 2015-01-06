@@ -46,13 +46,30 @@
         for (var i = 0; i < 4; i++) {
           this.go(size).turn(90);
 	}
+	this.draw();
         // to be a good function, we want to allow chaining
+        return this;
+      }
+
+      // add custom "spirograph" function based on our new square function
+      p.spiro = function() {
+        for (var i = 0; i < 36; i++) {
+	  var randomNumber = Math.floor(Math.random() * 4096);
+	  var hexString = "#" + randomNumber.toString(16);
+	  console.log(hexString);
+	  this.penstyle(hexString);
+          this.square(50).turn(10);
+          // this.star(50,26,50).turn(10);
+        }
+		
         return this;
       }
 
 
 
-      p.star(10, 4, 50);
+      p.star(50, 26, 50);
+
+      p.fillstyle().jump(300, 250).spiro().draw();
 
 
       /*
