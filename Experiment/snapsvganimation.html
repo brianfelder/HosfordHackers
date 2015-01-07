@@ -9,6 +9,7 @@
             being drawn: shorter for short lines and longer for long lines. -->
       <!-- Use http://snapsvg.io/start/ Less object-orienty, but backed by adobe -->
       <!-- Or http://svgjs.com/  This one seems more object-oriented, but not as much traction.           svg.js's polyline plot() seems to have nice animation features. -->
+      <!-- 
       <svg id="svgout" width="500" height="500">
         <line x1="0" y1="0" x2="300" y2="400"
 	  style="stroke:rgb(255,0,0);stroke-width:2;stroke-dasharray:500,500; stroke-dashoffset:500">
@@ -16,17 +17,21 @@
               from="500" to="0" dur="2s" fill="freeze"/>
         </line>
 </svg>
+       -->
+            <svg id="svgout" width="500" height="500"></svg>
+
     </div>
     <script>
 
+
+
 var s = Snap("#svgout");
-// To understand the meaning of the paths below:
-// https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d
 var svgString1 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L 60 180 L 0 120 L 0 60 Z" stroke="blue"/>';
 var svgString2 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L 60 180 L 0 120 L 0 60 Z" stroke="red"/>';
 
 
 function Drawing( svgString, transformString, timeBetweenDraws ) {
+    this.options = {};
     this.fragment = Snap.parse( svgString );
     this.pathArray = this.fragment.selectAll('path');
     this.group = s.g().transform( transformString ).drag();
@@ -39,7 +44,7 @@ Drawing.prototype.init = function( svgString, transformString ) {
 };
 
 Drawing.prototype.endReached = function() {
-    if( this.currentPathIndex >= this.pathArray.length ) {
+	if( ( this.currentPathIndex >= this.pathArray.length ) || ( this.currentPathIndex < 0) ) {
         return true;
     };
 };
@@ -51,6 +56,17 @@ Drawing.prototype.initDraw = function() {
     this.init();
     this.draw();
 };
+
+Drawing.prototype.reverseDraw = function() {
+        this.init();
+        var drawGroup = this.group;
+        this.pathArray.forEach( function( el ) {
+                drawGroup.append(el);           // draw it first, so we can slowly delete it, may want to add a check to see if it already exists then we may not need to
+        } );
+        this.currentPathIndex = this.pathArray.length - 1;
+        this.options.reverse = true;
+        this.draw();
+}
 
 Drawing.prototype.quickDraw = function() {
     this.init();
@@ -68,30 +84,52 @@ Drawing.prototype.draw = function() {         // this is the main animation bit
     var myPath = this.pathArray[ this.currentPathIndex ] ;
 
     this.leng = myPath.getTotalLength();
-
     this.group.append( myPath );
-
      myPath.attr({
        fill: 'none',
        "stroke-dasharray": this.leng + " " + this.leng,
        "stroke-dashoffset": this.leng
      });
 
-     this.currentPathIndex++;
+    if( myPath.attr('stroke') == 'none' ) {
+        myPath.attr({ stroke: '#000000' });
+    }
 
-     myPath.animate({"stroke-dashoffset": 0}, this.timeBetweenDraws, mina.easeout, this.draw.bind( this ) );
+    if( this.options.reverse ) {
+        myPath.attr({ "stroke-dashoffset": 0 });
+        this.currentPathIndex--;
+        myPath.animate({"stroke-dashoffset": this.leng}, this.timeBetweenDraws, mina.easeout, this.draw.bind( this ) );
+    } else {
+        this.currentPathIndex++;
+        myPath.animate({"stroke-dashoffset": 0}, this.timeBetweenDraws, mina.easeout, this.draw.bind( this ) );
 
+    }
 };
 
+function loadPaths( filename, object, callback ) {
+        Snap.load( filename, function( frag ) {
+                object.fragment = frag;
+                object.pathArray = frag.selectAll('path');
+                callback();
+        });
+
+}
+
+var drawing = new Drawing(undefined,'t10,10',0);
+loadPaths( 'Dreaming_tux.svg', drawing, drawing.reverseDraw.bind( drawing ) );
 
 
 var myDrawing1 = new Drawing( svgString1, 't0, 0, s1.8', 800 );
 var myDrawing2 = new Drawing( svgString2, 't69,50 s1.8', 3000 );
 var myDrawing3 = new Drawing( svgString2, 't150,150 s1.8', 5000 );
+var myDrawing4 = new Drawing( svgString1, 't50,50 s1.8', 5000 );
 
 myDrawing1.initDraw();
 myDrawing1.callOnFinished = function() { myDrawing2.initDraw() };
 myDrawing2.callOnFinished = function() { myDrawing3.initDraw() };
+myDrawing3.callOnFinished = function() { myDrawing1.callOnFinished = function() {}; myDrawing1.reverseDraw() };
+//myDrawing2.callOnFinished = function() { myDrawing2.callOnFinished = myDrawing3.initDraw(); myDrawing2.reverseDraw() };
+//myDrawing3.callOnFinished = function() { myDrawing3.callOnFInished = function() {}; myDrawing3.reverseDraw() };
 
     </script>
   </body>
