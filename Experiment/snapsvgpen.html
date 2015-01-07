@@ -72,12 +72,14 @@ Drawing.prototype.draw = function() {         // this is the main animation bit
         };
     };
     var myPath = this.pathArray[ this.currentPathIndex ] ;
+    console.log(myPath);
+    console.log(this.pathArray);
 
     this.leng = myPath.getTotalLength();
-    console.log("leng: " + this.leng);
-    console.log("currentPathIndex: " + this.currentPathIndex);
-    console.log("myPath: " + myPath);
-    console.log("pathArray: " + this.pathArray);
+    // console.log("leng: " + this.leng);
+    // console.log("currentPathIndex: " + this.currentPathIndex);
+    // console.log("myPath: " + myPath);
+    // console.log("pathArray: " + this.pathArray);
 
     this.group.append( myPath );
 
@@ -93,59 +95,31 @@ Drawing.prototype.draw = function() {         // this is the main animation bit
 
 };
 
-var Path = function() {
-  this.init();
+var Path = function(startX, startY) {
+  this.init(startX, startY);
 }
 
-Path.prototype.init = function() {
-  this.x = 0;
-  this.y = 0;
-  this.direction = -90;
+Path.prototype.init = function(startX, startY) {
+  this.startX = (typeof startX === "undefined") ? 0 : startX;
+  this.startY = (typeof startY === "undefined") ? 0 : startY;
   this.pathDescription = "";
-  this.directionRadians = function() { return this.toRad(this.direction); };
-  this.penIsDown = true;
+  this.isPenDown = true;
   this.color = null;
 }
 
-
-Path.prototype.turn = function(degrees) {
-  this.direction += degrees;
-  this.direction = this.direction % 360;
-  return this;
-}
-
-Path.prototype.rad = Math.PI / 180.0;
-	
-Path.prototype.toRad = function(degrees) {
-  return degrees * this.rad;
-}
-
-Path.prototype.go = function(distance) {
-  var currentDirectionRadians = this.toRad(this.dir);
-
-  this.x += Math.round(distance * Math.cos(this.directionRadians()));
-  this.y += Math.round(distance * Math.sin(this.directionRadians()));
-
-  if (this.penIsDown)
+Path.prototype.go = function(x, y) {
+  if (this.isPenDown)
     this.pathDescription += "L ";
   else
     this.pathDescription += "M ";
 
-  this.pathDescription += this.x + " " + this.y + " ";
+  this.pathDescription += x + " " + y + " ";
 
   return this;
 }
 
-Path.prototype.penup = function() {
-  this.penIsDown = false;
-}
-
-Path.prototype.pendown = function() {
-  this.penIsDown = true;
-}
-
 Path.prototype.pathString = function() {
-  var toReturn = '<path id="s3" d="M 0 0 ' + this.pathDescription + '"';
+  var toReturn = '<path id="s3" d="M ' + this.startX + ' ' + this.startY + ' ' + this.pathDescription + '"';
   if (this.color != null) {
     toReturn += ' stroke="' + this.color + '"';
   }
@@ -154,24 +128,114 @@ Path.prototype.pathString = function() {
 }
 
 Path.prototype.draw = function() {
+  // console.log(this.pathString());
   var myDrawing = new Drawing(this.pathString(), 't0, 0, s1.8', 800 );
   myDrawing.initDraw();
+  this.callOnFinished();
 }
 
-var thePath = new Path();
-thePath.color = "blue";
-thePath.turn(135);
-thePath.go(200);
-thePath.penup();
-thePath.turn(-90);
-thePath.go(50);
-thePath.pendown();
-thePath.turn(40);
-thePath.go(20);
-console.log(thePath.pathString());
-thePath.draw();
+Path.prototype.callOnFinished = function() {
+}
 
-/**
+// Refactor so that we have a "Pen" object, which is aware of current location, 
+// direction, and has an array of Path objects.
+// Then, on draw, draw out the array of paths.
+
+var Pen = function() {
+  this.init();
+}
+
+Pen.prototype.init = function() {
+  this.x = 0;
+  this.y = 0;
+  this.direction = -90;
+  this.directionRadians = function() { return this.toRad(this.direction); };
+  this.isPenDown = true;
+  this.color = "blue";
+  this.resetPath();
+  this.paths = [];
+}
+
+Pen.prototype.rad = Math.PI / 180.0;
+	
+Pen.prototype.toRad = function(degrees) {
+  return degrees * this.rad;
+}
+
+Pen.prototype.turn = function(degrees) {
+  this.direction += degrees;
+  this.direction = this.direction % 360;
+  return this;
+}
+
+Pen.prototype.go = function(distance) {
+  var currentDirectionRadians = this.toRad(this.dir);
+
+  this.x += Math.round(distance * Math.cos(this.directionRadians()));
+  this.y += Math.round(distance * Math.sin(this.directionRadians()));
+
+  this.currentPath.go(this.x, this.y);
+
+  return this;
+}
+
+Pen.prototype.resetPath = function() {
+  var newPath = new Path(this.x, this.y);
+  if (this.currentPath) {
+    this.currentPath.callOnFinished = function() { newPath.draw() };
+    this.paths.push(this.currentPath);
+  }
+  this.currentPath = newPath;
+
+  this.currentPath.color = this.color;
+}
+
+Pen.prototype.setColor = function(color) {
+	this.color = color;
+	this.resetPath();
+}
+
+
+Pen.prototype.penup = function() {
+  // if (this.isPenDown === true)
+  //	  this.resetPath();
+  this.isPenDown = false;
+}
+
+Pen.prototype.pendown = function() {
+  // if (this.isPenDown === false)
+  // 	  this.resetPath();
+  this.isPenDown = true;
+}
+
+Pen.prototype.draw = function() {
+  this.resetPath();
+  this.paths[0].draw();
+  /*
+  // console.log(this.paths);
+  for (var i = 0; i < this.paths.length; i++) {
+	  var path = this.paths[i];
+	  // console.log(path);
+	  path.draw();
+  }
+  */
+}
+
+
+var thePen = new Pen();
+thePen.setColor("blue");
+thePen.turn(135);
+thePen.go(200);
+thePen.penup();
+thePen.turn(-90);
+thePen.go(50);
+thePen.pendown();
+thePen.turn(40);
+thePen.go(20);
+// console.log(thePen.pathString());
+thePen.draw();
+
+/*
 var myDrawing1 = new Drawing( svgString1, 't0, 0, s1.8', 800 );
 var myDrawing2 = new Drawing( svgString2, 't69,50 s1.8', 3000 );
 var myDrawing3 = new Drawing( svgString2, 't150,150 s1.8', 5000 );
@@ -179,7 +243,7 @@ var myDrawing3 = new Drawing( svgString2, 't150,150 s1.8', 5000 );
 myDrawing1.initDraw();
 myDrawing1.callOnFinished = function() { myDrawing2.initDraw() };
 myDrawing2.callOnFinished = function() { myDrawing3.initDraw() };
-**/
+*/
 
     </script>
   </body>
