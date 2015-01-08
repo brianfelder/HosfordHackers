@@ -30,6 +30,7 @@ var svgString1 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L
 var svgString2 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L 60 180 L 0 120 L 0 60 Z" stroke="red"/>';
 
 
+
 function Drawing( svgString, transformString, timeBetweenDraws ) {
     this.options = {};
     this.fragment = Snap.parse( svgString );
@@ -118,16 +119,56 @@ function loadPaths( filename, object, callback ) {
 // var drawing = new Drawing(undefined,'t10,10',0);
 // loadPaths( 'Dreaming_tux.svg', drawing, drawing.reverseDraw.bind( drawing ) );
 
-
+/*
 var myDrawing1 = new Drawing( svgString1, 't0, 0, s1.8', 800 );
 var myDrawing2 = new Drawing( svgString2, 't69,50 s1.8', 3000 );
 var myDrawing3 = new Drawing( svgString2, 't150,150 s1.8', 5000 );
 var myDrawing4 = new Drawing( svgString1, 't50,50 s1.8', 5000 );
 
-myDrawing1.initDraw();
+
 myDrawing1.callOnFinished = function() { myDrawing2.initDraw() };
 myDrawing2.callOnFinished = function() { myDrawing3.initDraw() };
 myDrawing3.callOnFinished = function() { myDrawing1.callOnFinished = function() {}; myDrawing1.reverseDraw() };
+*/
+
+var octogonPathStrings = [
+                          '<path id="s3" d="M 60 0 L 120 0 L 180 60" stroke="red"/>',
+                          '<path id="s3" d="M 180 60 L 180 120 L 120 180 L 60 180" stroke="purple"/>',
+                          '<path id="s3" d="M 60 180 L 0 120 L 0 60 L 60 0" stroke="blue"/>'
+			 ];
+
+var octogonDrawings = [];
+for (var i = 0; i < octogonPathStrings.length; i++) {
+  // console.log(octogonPathStrings[i]);
+  var currentDrawing = new Drawing(octogonPathStrings[i], 't0, 0, s1.8', 800 );
+  octogonDrawings[i] = currentDrawing;
+}
+
+if (octogonDrawings.length > 0) {
+  octogonDrawings[0].initDraw();
+  for (var i = 0; i < octogonDrawings.length - 1; i++) {
+    var currentDrawing = octogonDrawings[i];
+    // This is how you pass the value of i into the generated function.
+    // https://stackoverflow.com/questions/19696015/javascript-creating-functions-in-a-for-loop
+    currentDrawing.callOnFinished = (function(val) {
+		      return function(){ 
+		        var nextDrawing = octogonDrawings[val+1];
+		        nextDrawing.initDraw();
+		      }
+		    })(i);
+  }
+}
+
+// Hard-coded version
+var hardCodedOctogonDrawings = [];
+hardCodedOctogonDrawings[0] = new Drawing( octogonPathStrings[0], 't60, 80, s1.8', 800 );
+hardCodedOctogonDrawings[1] = new Drawing( octogonPathStrings[1], 't60, 80, s1.8', 800 );
+hardCodedOctogonDrawings[2] = new Drawing( octogonPathStrings[2], 't60, 80, s1.8', 800 );
+hardCodedOctogonDrawings[0].initDraw();
+hardCodedOctogonDrawings[0].callOnFinished = function() { hardCodedOctogonDrawings[1].initDraw() };
+hardCodedOctogonDrawings[1].callOnFinished = function() { hardCodedOctogonDrawings[2].initDraw() };
+
+
 //myDrawing2.callOnFinished = function() { myDrawing2.callOnFinished = myDrawing3.initDraw(); myDrawing2.reverseDraw() };
 //myDrawing3.callOnFinished = function() { myDrawing3.callOnFInished = function() {}; myDrawing3.reverseDraw() };
 
