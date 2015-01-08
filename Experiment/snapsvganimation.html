@@ -18,24 +18,48 @@
         </line>
 </svg>
        -->
-            <svg id="svgout" width="500" height="500"></svg>
+      <!-- <svg id="svgout" width="500" height="500"></svg> -->
 
     </div>
     <script>
 
 
-
-var s = Snap("#svgout");
+/*
 var svgString1 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L 60 180 L 0 120 L 0 60 Z" stroke="blue"/>';
 var svgString2 = '<path id="s3" d="M 60 0 L 120 0 L 180 60 L 180 120 L 120 180 L 60 180 L 0 120 L 0 60 Z" stroke="red"/>';
+*/
+
+function Canvas(options) {
+	this.init(options);
+}
+
+Canvas.prototype.init = function(options) {
+   var options = options || {};
+   // User must provide either tagName or both width and height.
+   if (!(options.tagName || (options.width && options.height))) {
+	throw 'Canvas requires options of either "tagName" or both "width" and "height".'
+   }
+   // User can't provide both canvas and width and height. Make up your mind!
+   if (options.tagName && options.width && options.height) {
+	throw 'Canvas requires options of either "tagName" or both "width" and "height". Cannot use both.'
+   }
+   this.tagName = options.tagName || null;
+   this.width = options.width || null;
+   this.height = options.height || null;
+   this.snap = null;
+   if (this.tagName)
+	   this.snap = Snap(this.tagName);
+   else
+	   this.snap = Snap(this.width, this.height);
+}
 
 
-
-function Drawing( svgString, transformString, timeBetweenDraws ) {
+function Drawing( canvas, svgString, transformString, timeBetweenDraws ) {
     this.options = {};
+    this.canvas = canvas;
     this.fragment = Snap.parse( svgString );
     this.pathArray = this.fragment.selectAll('path');
-    this.group = s.g().transform( transformString ).drag();
+    this.group = this.canvas.snap.g().transform( transformString ).drag();
     this.timeBetweenDraws = timeBetweenDraws;
 };
 
@@ -131,6 +155,7 @@ myDrawing2.callOnFinished = function() { myDrawing3.initDraw() };
 myDrawing3.callOnFinished = function() { myDrawing1.callOnFinished = function() {}; myDrawing1.reverseDraw() };
 */
 
+var theCanvas = new Canvas({width: 500, height: 500});
 var octogonPathStrings = [
                           '<path id="s3" d="M 60 0 L 120 0 L 180 60" stroke="red"/>',
                           '<path id="s3" d="M 180 60 L 180 120 L 120 180 L 60 180" stroke="purple"/>',
@@ -140,7 +165,7 @@ var octogonPathStrings = [
 var octogonDrawings = [];
 for (var i = 0; i < octogonPathStrings.length; i++) {
   // console.log(octogonPathStrings[i]);
-  var currentDrawing = new Drawing(octogonPathStrings[i], 't0, 0, s1.8', 800 );
+  var currentDrawing = new Drawing(theCanvas, octogonPathStrings[i], 't0, 0, s1.8', 800 );
   octogonDrawings[i] = currentDrawing;
 }
 
@@ -161,9 +186,9 @@ if (octogonDrawings.length > 0) {
 
 // Hard-coded version
 var hardCodedOctogonDrawings = [];
-hardCodedOctogonDrawings[0] = new Drawing( octogonPathStrings[0], 't60, 80, s1.8', 800 );
-hardCodedOctogonDrawings[1] = new Drawing( octogonPathStrings[1], 't60, 80, s1.8', 800 );
-hardCodedOctogonDrawings[2] = new Drawing( octogonPathStrings[2], 't60, 80, s1.8', 800 );
+hardCodedOctogonDrawings[0] = new Drawing( theCanvas, octogonPathStrings[0], 't60, 80, s1.8', 800 );
+hardCodedOctogonDrawings[1] = new Drawing( theCanvas, octogonPathStrings[1], 't60, 80, s1.8', 800 );
+hardCodedOctogonDrawings[2] = new Drawing( theCanvas, octogonPathStrings[2], 't60, 80, s1.8', 800 );
 hardCodedOctogonDrawings[0].initDraw();
 hardCodedOctogonDrawings[0].callOnFinished = function() { hardCodedOctogonDrawings[1].initDraw() };
 hardCodedOctogonDrawings[1].callOnFinished = function() { hardCodedOctogonDrawings[2].initDraw() };
