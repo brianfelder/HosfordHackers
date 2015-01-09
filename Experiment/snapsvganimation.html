@@ -175,6 +175,7 @@ Pen.prototype.init = function() {
   this.isPenDown = true;
   this.currentStroke = "black";
   this.movedSinceStrokeChange = false;
+  this.movedSincePenChange = false;
   this.paths = [];
   this.pathCurrentIndex = 0;
   this.canvas = new Canvas({width: 500, height: 500});
@@ -224,7 +225,7 @@ Pen.prototype.go = function(distance) {
   if (! this.paths[this.pathCurrentIndex]) {
 	var newPath = new Path();
 	newPath.addPoint({ "x" : this.x, "y" : this.y });
-	newPath.stroke = this.currentStroke;
+	newPath.stroke = this.isPenDown ? this.currentStroke : "white";
 	this.paths[this.pathCurrentIndex] = newPath;
   }
 
@@ -232,38 +233,52 @@ Pen.prototype.go = function(distance) {
   this.y += Math.round(distance * Math.sin(currentDirectionRadians));
 
   this.paths[this.pathCurrentIndex].addPoint({ "x" : this.x, "y" : this.y });
+  this.movedSinceStrokeChange = true;
+  this.movedSincePenChange = true;
 
   return this;
 }
 
 Pen.prototype.setStroke = function(strokeColor) {
+	if(this.movedSinceStrokeChange) {
+		// Move the pathCurrentIndex to the next index.
+		this.pathCurrentIndex = this.paths.length;
+	}
+	this.movedSinceStrokeChange = false;
 }
 
 
 Pen.prototype.penup = function() {
-  // if (this.isPenDown === true)
-  //	  this.resetPath();
-  this.isPenDown = false;
+	if(this.movedSincePenChange) {
+		// Move the pathCurrentIndex to the next index.
+		this.pathCurrentIndex = this.paths.length;
+	}
+	this.movedSincePenChange = false;
+  	this.isPenDown = false;
 }
 
 Pen.prototype.pendown = function() {
-  // if (this.isPenDown === false)
-  // 	  this.resetPath();
-  this.isPenDown = true;
+	if(this.movedSincePenChange) {
+		// Move the pathCurrentIndex to the next index.
+		this.pathCurrentIndex = this.paths.length;
+	}
+	this.movedSincePenChange = false;
+  	this.isPenDown = true;
 }
 
 
-
+// Try it out!
 var thePen = new Pen();
-thePen.stroke = "blue";
+thePen.currentStroke = "blue";
 thePen.turn(135);
 thePen.go(200);
-// thePen.penup();
+thePen.penup();
 thePen.turn(-90);
 thePen.go(50);
-// thePen.pendown();
+thePen.currentStroke="purple";
+thePen.pendown();
 thePen.turn(40);
-thePen.go(20);
+thePen.go(60);
 // console.log(thePen.pathString());
 thePen.draw();
 
