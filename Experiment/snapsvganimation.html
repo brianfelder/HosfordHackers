@@ -131,6 +131,147 @@ Drawing.prototype.draw = function() {         // this is the main animation bit
     }
 };
 
+var Path = function() {
+	this.init();
+}
+
+Path.prototype.init = function() {
+	this.id = null;
+	// Array of objects: { x : 0, y : 0 };
+	this.points = [];
+	this.stroke = "black";
+}
+
+// { x : 0, y : 0 }
+Path.prototype.addPoint = function(point) {
+	this.points.push(point);
+}
+
+// '<path id="s3" d="M 60 0 L 120 0 L 180 60" stroke="red"/>'
+Path.prototype.toSvgString = function() {
+	// We need to have at least 2 points to draw something.
+	if (this.points.length < 2)
+		return null;
+	var toReturn = '<path ';
+	if (this.id)
+		toReturn += 'id="' + this.id + '" ';
+	toReturn += 'd="M ' + this.points[0].x + ' ' + this.points[0].y + ' ';
+	for (var i = 1; i < this.points.length; i++) {
+		toReturn += 'L ' + this.points[i].x + ' ' + this.points[i].y + ' ';
+	}
+	toReturn += '" stroke="' + this.stroke + '" />';
+	return toReturn;
+}
+
+
+var Pen = function() {
+	  this.init();
+}
+
+Pen.prototype.init = function() {
+  this.x = 0;
+  this.y = 0;
+  this.direction = -90;
+  this.isPenDown = true;
+  this.currentStroke = "black";
+  this.movedSinceStrokeChange = false;
+  this.paths = [];
+  this.pathCurrentIndex = 0;
+  this.canvas = new Canvas({width: 500, height: 500});
+
+}
+
+Pen.prototype.draw = function() {
+	var drawings = [];
+	for (var i = 0; i < this.paths.length; i++) {
+		var currentPathString = this.paths[i].toSvgString();
+		console.log(currentPathString);
+		var currentDrawing = new Drawing(this.canvas, currentPathString, 't0, 0, s1.8', 800 );
+		drawings[i] = currentDrawing;
+	}
+
+	if (drawings.length > 0) {
+		drawings[0].initDraw();
+		for (var i = 0; i < drawings.length - 1; i++) {
+			var currentDrawing = drawings[i];
+			// This is how you pass the value of i into the generated function.
+			// https://stackoverflow.com/questions/19696015/javascript-creating-functions-in-a-for-loop
+			currentDrawing.callOnFinished = (function(val) {
+					return function(){ 
+						var nextDrawing = drawings[val+1];
+						nextDrawing.initDraw();
+					}
+				})(i);
+		}
+	}
+
+}
+
+Pen.prototype.turn = function(degrees) {
+  this.direction += degrees;
+  this.direction = this.direction % 360;
+  return this;
+}
+
+Pen.prototype.go = function(distance) {
+  var currentDirectionRadians = Snap.rad(this.direction);
+
+  // If we're moving, we need to see if we have moved 
+  // Store this in objects instead of strings. Object has:
+  //   starting point
+  //   visit points
+  //   color
+  if (! this.paths[this.pathCurrentIndex]) {
+	var newPath = new Path();
+	newPath.addPoint({ "x" : this.x, "y" : this.y });
+	newPath.stroke = this.currentStroke;
+	this.paths[this.pathCurrentIndex] = newPath;
+  }
+
+  this.x += Math.round(distance * Math.cos(currentDirectionRadians));
+  this.y += Math.round(distance * Math.sin(currentDirectionRadians));
+
+  this.paths[this.pathCurrentIndex].addPoint({ "x" : this.x, "y" : this.y });
+
+  return this;
+}
+
+Pen.prototype.setStroke = function(strokeColor) {
+}
+
+
+Pen.prototype.penup = function() {
+  // if (this.isPenDown === true)
+  //	  this.resetPath();
+  this.isPenDown = false;
+}
+
+Pen.prototype.pendown = function() {
+  // if (this.isPenDown === false)
+  // 	  this.resetPath();
+  this.isPenDown = true;
+}
+
+
+
+var thePen = new Pen();
+thePen.stroke = "blue";
+thePen.turn(135);
+thePen.go(200);
+// thePen.penup();
+thePen.turn(-90);
+thePen.go(50);
+// thePen.pendown();
+thePen.turn(40);
+thePen.go(20);
+// console.log(thePen.pathString());
+thePen.draw();
+
+
+
+
+
+
 function loadPaths( filename, object, callback ) {
         Snap.load( filename, function( frag ) {
                 object.fragment = frag;
@@ -155,6 +296,11 @@ myDrawing2.callOnFinished = function() { myDrawing3.initDraw() };
 myDrawing3.callOnFinished = function() { myDrawing1.callOnFinished = function() {}; myDrawing1.reverseDraw() };
 */
 
+
+//////////////////////////////////
+// Working version below
+//////////////////////////////////
+/*
 var theCanvas = new Canvas({width: 500, height: 500});
 var octogonPathStrings = [
                           '<path id="s3" d="M 60 0 L 120 0 L 180 60" stroke="red"/>',
@@ -192,7 +338,7 @@ hardCodedOctogonDrawings[2] = new Drawing( theCanvas, octogonPathStrings[2], 't6
 hardCodedOctogonDrawings[0].initDraw();
 hardCodedOctogonDrawings[0].callOnFinished = function() { hardCodedOctogonDrawings[1].initDraw() };
 hardCodedOctogonDrawings[1].callOnFinished = function() { hardCodedOctogonDrawings[2].initDraw() };
-
+*/
 
 //myDrawing2.callOnFinished = function() { myDrawing2.callOnFinished = myDrawing3.initDraw(); myDrawing2.reverseDraw() };
 //myDrawing3.callOnFinished = function() { myDrawing3.callOnFInished = function() {}; myDrawing3.reverseDraw() };
