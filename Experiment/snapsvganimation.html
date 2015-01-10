@@ -218,9 +218,9 @@ Pen.prototype.turn = function(degrees) {
   return this;
 }
 
-Pen.prototype.forward = function(distance) {
-  var currentDirectionRadians = Snap.rad(this.direction);
-
+// Move to a new point.
+// Will draw if pen is down, move if pen is not down.
+Pen.prototype.moveTo = function(newX, newY) {
   // If we're moving, we need to see if we have moved 
   // Store this in objects instead of strings. Object has:
   //   starting point
@@ -234,12 +234,34 @@ Pen.prototype.forward = function(distance) {
 	this.paths[this.pathCurrentIndex] = newPath;
   }
 
-  this.x += Math.round(distance * Math.cos(currentDirectionRadians));
-  this.y += Math.round(distance * Math.sin(currentDirectionRadians));
+  this.x = newX;
+  this.y = newY;
 
   this.paths[this.pathCurrentIndex].addPoint({ "x" : this.x, "y" : this.y });
   this.movedSinceStrokeChange = true;
   this.movedSincePenChange = true;
+
+  return this;
+}
+
+// Pick the pen up, and move a number of pixels x / y, then restore pen state.
+Pen.prototype.jump = function(changeX, changeY) {
+	var tempIsPenDown = this.isPenDown;
+	this.penup();
+	this.moveTo(this.x + changeX, this.y + changeY);
+	if (tempIsPenDown)
+		this.pendown();
+	else
+		this.penup();
+}
+
+
+
+Pen.prototype.forward = function(distance) {
+  var currentDirectionRadians = Snap.rad(this.direction);
+  newX = this.x + Math.round(distance * Math.cos(currentDirectionRadians));
+  newY = this.y + Math.round(distance * Math.sin(currentDirectionRadians));
+  this.moveTo(newX, newY);
 
   return this;
 }
@@ -250,6 +272,7 @@ Pen.prototype.setStroke = function(strokeColor) {
 		this.pathCurrentIndex = this.paths.length;
 	}
 	this.movedSinceStrokeChange = false;
+	return this;
 }
 
 
@@ -260,6 +283,7 @@ Pen.prototype.penup = function() {
 	}
 	this.movedSincePenChange = false;
   	this.isPenDown = false;
+	return this;
 }
 
 Pen.prototype.pendown = function() {
@@ -269,6 +293,7 @@ Pen.prototype.pendown = function() {
 	}
 	this.movedSincePenChange = false;
   	this.isPenDown = true;
+	return this;
 }
 
 
@@ -284,7 +309,7 @@ thePen.pendown();
 thePen.turn(40);
 thePen.currentStroke="purple";
 thePen.forward(60);
-// thePen.jump(100, 100);
+thePen.jump(10, 10);
 thePen.forward(100);
 // console.log(thePen.pathString());
 thePen.draw();
