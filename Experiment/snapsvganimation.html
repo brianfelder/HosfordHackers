@@ -140,6 +140,7 @@ Path.prototype.init = function() {
 	// Array of objects: { x : 0, y : 0 };
 	this.points = [];
 	this.stroke = "black";
+	this.isPenDown = true;
 }
 
 // { x : 0, y : 0 }
@@ -159,7 +160,10 @@ Path.prototype.toSvgString = function() {
 	for (var i = 1; i < this.points.length; i++) {
 		toReturn += 'L ' + this.points[i].x + ' ' + this.points[i].y + ' ';
 	}
-	toReturn += '" stroke="' + this.stroke + '" />';
+	toReturn += '" stroke="' + this.stroke + '"';
+	var strokeOpacity = this.isPenDown ? 1 : 0;
+	toReturn += ' style="stroke-opacity: ' + strokeOpacity + ';"';
+	toReturn += ' />';
 	return toReturn;
 }
 
@@ -214,7 +218,7 @@ Pen.prototype.turn = function(degrees) {
   return this;
 }
 
-Pen.prototype.go = function(distance) {
+Pen.prototype.forward = function(distance) {
   var currentDirectionRadians = Snap.rad(this.direction);
 
   // If we're moving, we need to see if we have moved 
@@ -225,7 +229,8 @@ Pen.prototype.go = function(distance) {
   if (! this.paths[this.pathCurrentIndex]) {
 	var newPath = new Path();
 	newPath.addPoint({ "x" : this.x, "y" : this.y });
-	newPath.stroke = this.isPenDown ? this.currentStroke : "white";
+	newPath.stroke = this.currentStroke;
+	newPath.isPenDown = this.isPenDown;
 	this.paths[this.pathCurrentIndex] = newPath;
   }
 
@@ -271,14 +276,16 @@ Pen.prototype.pendown = function() {
 var thePen = new Pen();
 thePen.currentStroke = "blue";
 thePen.turn(135);
-thePen.go(200);
+thePen.forward(200);
 thePen.penup();
 thePen.turn(-90);
-thePen.go(50);
-thePen.currentStroke="purple";
+thePen.forward(50);
 thePen.pendown();
 thePen.turn(40);
-thePen.go(60);
+thePen.currentStroke="purple";
+thePen.forward(60);
+// thePen.jump(100, 100);
+thePen.forward(100);
 // console.log(thePen.pathString());
 thePen.draw();
 
