@@ -219,6 +219,7 @@ Pen.prototype.init = function() {
 Pen.prototype.draw = function() {
 	var drawings = [];
 	for (var i = 0; i < this.paths.length; i++) {
+		this.paths[i].id = "path" + i;
 		var currentPathString = this.paths[i].toSvgString();
 		console.log(currentPathString);
 		var currentDrawing = new Drawing(this.canvas, currentPathString, 't0, 0, s1.8', 800 );
