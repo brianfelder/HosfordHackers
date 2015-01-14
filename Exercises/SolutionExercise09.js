@@ -38,12 +38,21 @@ while ((missesRemaining > 0) && (foundLetterCount < randomWord.length)) {
 	} else {
 		// We have a single character.
 		// See if it's in the word.
+		// We don't have a match yet, so match is false.
 		var match = false;
+		// Loop through our random word, character by character, to see
+		// if the character is a match.
 		for (var i = 0; i < randomWord.length; i++) {
-			if (currentGuess === randomWord[i]) {
+			// If the character matches, and it hasn't been matched yet
+			// (it's _ if it hasn't been matched yet)
+			if ((currentGuess === randomWord[i]) && (wordSecret[i] === "_")) {
 				// We have a match!
+				// Set the character in the array to the
+				// current guess character (previously was _).
 				wordSecret[i] = currentGuess;
+				// Add to the number of letters we have found.
 				foundLetterCount++;
+				// We have found a match for this guess.
 				match = true;
 			}
 		}
