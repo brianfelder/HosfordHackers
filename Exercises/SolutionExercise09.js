@@ -31,6 +31,7 @@ for (var i = 0; i < randomWord.length; i++) {
 var foundLetterCount = 0;
 
 while ((missesRemaining > 0) && (foundLetterCount < randomWord.length)) {
+	// Show the user the current status of their guesses, and how many misses left.
 	console.log("Current word status: '" + wordSecret.join(" ") + "'");
 	console.log("You have " + missesRemaining + " misses remaining.");
 	var currentGuess = prompt("Guess a letter.");
