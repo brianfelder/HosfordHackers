@@ -288,6 +288,19 @@ Or, an object can be an attribute of an object:
     oreo.sound.frequency
     // "whenever hungry"
 
+You can even add a function to an object, so that your object can "do things":
+
+    oreo.speak = function() {
+      console.log("Meow!");
+    };
+    chestnut.speak = function() {
+      console.log("Squeak!");
+    };
+    oreo.speak();
+    // Meow!
+    chestnut.speak();
+    // Squeak!
+
 
 If you want to loop through the properties of an object, you can do it like this:
 

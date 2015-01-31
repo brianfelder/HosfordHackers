@@ -26,7 +26,6 @@ for (var i = 0; i < randomWord.length; i++) {
 	wordSecret[i] = "_";
 }
 
-
 // How many letters have been found?
 var foundLetterCount = 0;
 
